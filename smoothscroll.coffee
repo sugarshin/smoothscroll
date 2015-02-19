@@ -1,56 +1,62 @@
-$ = require 'jquery'
+###!
+ * @license smoothscroll
+ * (c) sugarshin
+ * License: MIT
+###
 
-class SmoothScroll
+do (root = this, factory = ($) ->
   "use strict"
 
-  _defaults:
-    speed: 500
-    fx: null
-    onScrollBefore: ->
-    onScrollAfter: ->
+  class SmoothScroll
+    "use strict"
 
-  _prepareTarget: ->
-    if @$el.attr('href') isnt '#'
-      @$target = $(@$el.attr('href'))
+    @addFX: (name, func) -> $.easing[name] = func
 
-  _prepareFX: (fx) ->
-    if typeof fx is 'function'
-      $.easing['_smoothScroll'] = fx
+    _defaults:
+      speed: 500
+      fxName: null
+      offset: 0
+      onScrollBefore: (el) ->
+      onScrollAfter: (el) ->
 
-  constructor: (@$el, opts) ->
-    @opts = $.extend {}, @_defaults, opts
-    @_prepareTarget()
-    @_prepareFX @opts.fx
-    @addEvent()
+    _configure: (el, opts) ->
+      @$el = $(el)
+      @opts = $.extend {}, @_defaults, opts
+      if @$el.attr('href') isnt '#'
+        @$target = $(@$el.attr('href'))
 
-  scroll: ->
-    unless @$target? then return
-    @opts.onScrollBefore? @$el[0]
-    val = @$target.offset().top
-    $('html, body')
-      .stop true, true
-      .animate
-        scrollTop: val
-      ,
-        duration: @opts.speed
-        easing: '_smoothScroll'
-      .promise()
-      .done => @opts.onScrollAfter? @$el[0]
-    return this
+    constructor: (@el, opts) ->
+      @_configure @el, opts
+      @events()
 
-  addEvent: ->
-    @$el.on 'click.smoothscroll', (ev) =>
-      ev.preventDefault()
-      @scroll()
-    return this
+    scroll: ->
+      unless @$target? then return
+      @opts.onScrollBefore? @$el[0]
+      val = @$target.offset().top - @opts.offset
+      $('html, body')
+        .stop true, true
+        .animate
+          scrollTop: val
+        ,
+          duration: @opts.speed
+          easing: @opts.fxName
+        .promise()
+        .done => @opts.onScrollAfter? @$el[0]
+      return this
 
-  rmEvent: ->
-    @$el.off 'click.smoothScroll'
-    return this
+    events: ->
+      @$el.on 'click.smoothscroll', (ev) =>
+        ev.preventDefault()
+        @scroll()
+      return this
 
-if typeof define is 'function' and define.amd
-  define -> SmoothScroll
-else if typeof module isnt 'undefined' and module.exports
-  module.exports = SmoothScroll
-else
-  window.SmoothScroll or= SmoothScroll
+    unbind: ->
+      @$el.off 'click.smoothscroll'
+      return this
+
+) ->
+  if typeof module is 'object' and typeof module.exports is 'object'
+    module.exports = factory require 'jquery'
+  else
+    root.SmoothScroll or= factory root.jQuery
+  return
