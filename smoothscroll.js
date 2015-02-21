@@ -12,9 +12,9 @@
     root.SmoothScroll || (root.SmoothScroll = factory(root.jQuery));
   }
 })(this, function($) {
+  "use strict";
   var SmoothScroll;
   return SmoothScroll = (function() {
-    "use strict";
     SmoothScroll.addEasing = function(name, func) {
       if ($.easing[name] != null) {
         return;

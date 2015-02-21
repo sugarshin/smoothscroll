@@ -5,9 +5,9 @@
 ###
 
 do (root = this, factory = ($) ->
+  "use strict"
 
   class SmoothScroll
-    "use strict"
 
     @addEasing: (name, func) ->
       if $.easing[name]? then return
