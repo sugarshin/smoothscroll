@@ -5,6 +5,7 @@
  * (c) sugarshin
  * License: MIT
  */
+"use strict";
 (function(root, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = factory(require('jquery'));
@@ -12,7 +13,6 @@
     root.SmoothScroll || (root.SmoothScroll = factory(root.jQuery));
   }
 })(this, function($) {
-  "use strict";
   var SmoothScroll;
   return SmoothScroll = (function() {
     SmoothScroll.addEasing = function(name, func) {

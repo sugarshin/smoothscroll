@@ -1,6 +1,6 @@
 {
   "name": "smoothscroll",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "SmoothScroll",
   "repository": "git@github.com:sugarshin/smoothscroll.git",
   "main": "smoothscroll.js",

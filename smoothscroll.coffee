@@ -4,8 +4,9 @@
  * License: MIT
 ###
 
+"use strict"
+
 do (root = this, factory = ($) ->
-  "use strict"
 
   class SmoothScroll
 
