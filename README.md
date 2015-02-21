@@ -26,6 +26,19 @@ or
 </script>
 ```
 
+### Config
+
+default
+
+```coffeescript
+_defaults:
+  speed: 500
+  easingName: null
+  offset: 0
+  onScrollBefore: (el) ->
+  onScrollAfter: (el) ->
+```
+
 ## Contributing
 
 [CoffeeScript](//coffeescript.org/)

@@ -5,16 +5,17 @@
 ###
 
 do (root = this, factory = ($) ->
-  "use strict"
 
   class SmoothScroll
     "use strict"
 
-    @addFX: (name, func) -> $.easing[name] = func
+    @addEasing: (name, func) ->
+      if $.easing[name]? then return
+      $.easing[name] = func
 
     _defaults:
       speed: 500
-      fxName: null
+      easingName: null
       offset: 0
       onScrollBefore: (el) ->
       onScrollAfter: (el) ->
@@ -39,7 +40,7 @@ do (root = this, factory = ($) ->
           scrollTop: val
         ,
           duration: @opts.speed
-          easing: @opts.fxName
+          easing: @opts.easingName
         .promise()
         .done => @opts.onScrollAfter? @$el[0]
       return this
