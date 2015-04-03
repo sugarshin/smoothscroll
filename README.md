@@ -4,52 +4,35 @@
 
 SmoothScroll
 
-```shell
-npm i sugarshin/smoothscroll
-```
-
 ## Usage
 
 ```coffeescript
 SmoothScroll = require 'smoothscroll'
 
-new SmoothScroll element
+new SmoothScroll el, opts
 ```
 
-or
+## Config
 
-```html
-<script src="jquery.js"></script>
-<script src="smoothscroll.js"></script>
-<script>
-  new SmoothScroll(element);
-</script>
-```
+default options
 
-### Config
-
-default
-
-```coffeescript
-_defaults:
-  speed: 500
-  easingName: null
-  offset: 0
-  onScrollBefore: (el) ->
-  onScrollAfter: (el) ->
+```js
+var options = {
+  speed: 700,
+  easingName: null,
+  offset: 0,
+  onScrollBefore: function(el) {},
+  onScrollAfter: function(el) {}
+};
 ```
 
 ## Contributing
 
-[CoffeeScript](//coffeescript.org/)
-
-[mocha-phantomjs](//github.com/metaskills/mocha-phantomjs)
-
-[power-assert](//github.com/twada/power-assert)
-
 ```shell
 npm test
 ```
+
+**incomplete**
 
 ## License
 

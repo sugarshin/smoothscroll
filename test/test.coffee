@@ -1,17 +1,14 @@
+{ jsdom } = require 'jsdom'
+global.document = jsdom '<html><body></body></html>'
+global.window = document.defaultView
+global.navigator = window.navigator
+
 assert = require 'power-assert'
 
-SmoothScroll = require '../smoothscroll'
-
-mocha.setup 'bdd'
-window.onload = ->
-  if window.mochaPhantomJS
-    mochaPhantomJS.run()
-  else
-    mocha.run()
-
-
+$ = require 'jquery'
+SmoothScroll = require '../src/smoothscroll.coffee'
 
 # .test()
 describe '.test()', ->
-  it 'テストのテスト', ->
+  it 'test', ->
     assert true
