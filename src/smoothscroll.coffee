@@ -18,6 +18,8 @@ class SmoothScroll
 
   @getCollection: -> _collection
 
+  @canselScroll: -> _$body.stop()
+
   _defaults:
     speed: 700
     easingName: null
@@ -38,7 +40,7 @@ class SmoothScroll
 
   scroll: ->
     unless @$target? then return
-    @opts.onScrollBefore? @$el[0]
+    @opts.onScrollBefore? @el
     val = @$target.offset().top - @opts.offset
     _$body
       .stop true, true
@@ -48,12 +50,15 @@ class SmoothScroll
         duration: @opts.speed
         easing: @opts.easingName
       .promise()
-      .done => @opts.onScrollAfter? @$el[0]
+      .done => @opts.onScrollAfter? @el
     return this
 
-  cancel: ->
-    _$body.stop()
-    return this
+  destroy: ->
+    @unbind()
+    for el, i in _collection
+      if el is @
+        _collection.splice i, 1
+        break
 
   _onClick: (ev) =>
     ev.preventDefault()
